@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-import { getAuth  , signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth  , signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 
 // Your web app's Firebase configuration
@@ -17,26 +17,43 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
 
-const Btn = document.querySelector('#Btn')
-Btn.addEventListener('click', (e) => {
-  e.preventDefault()
-  const password = document.querySelector('#password').value
-  const email = document.querySelector('#email').value
+// const Btn = document.querySelector('.Btn')
+// Btn.addEventListener('submit', (e) => {
+//   e.preventDefault()
+//   const password = document.querySelector('#password').value
+//   const email = document.querySelector('.email').value
+
+//   signInWithEmailAndPassword(auth, email, password)
+//   // inputs
+//     .then((userCredential) => {
+//       // Signed up 
+//       const user = userCredential.user;
+//       alert('Login Sucessfull ....')
+//       window.location.href = 'test.html'
+//       // ...
+//     })
+//     .catch((error) => {
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+//       alert(errorMessage)
+//       // ..
+//     });
+// })
+
+const form = document.querySelector('#loginForm');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const password = document.querySelector('#password').value;
+  const email = document.querySelector('.email').value;
 
   signInWithEmailAndPassword(auth, email, password)
-  // inputs
     .then((userCredential) => {
-      // Signed up 
-      const user = userCredential.user;
-      alert('Login Sucessfull ....')
-      window.location.href = 'test.html'
-      // ...
+      alert('Login Successful');
+      window.location.href = 'test.html';
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      alert(errorMessage)
-      // ..
+      alert(error.message);
     });
-})
-
+});

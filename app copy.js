@@ -1,9 +1,6 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-import { getAuth  , createUserWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
-
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAfIvDpFVMSGmcUTL_87I2w5pCwcWMo7_k",
   authDomain: "assignment-266ed.firebaseapp.com",
@@ -13,30 +10,50 @@ const firebaseConfig = {
   appId: "1:1086815409025:web:4524017f511bd0245f8e80"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app)
+const auth = getAuth(app);
 
-const Btn = document.querySelector('#Btn')
-Btn.addEventListener('click', (e) => {
-  e.preventDefault()
-  const password = document.querySelector('#password').value
-  const email = document.querySelector('#email').value
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("#signupForm");
 
-  createUserWithEmailAndPassword(auth, email, password)
-  // inputs
-    .then((userCredential) => {
-      // Signed up 
-      const user = userCredential.user;
-      alert('creating acccount ....')
-      window.location.href = 'test.html'
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      alert(errorMessage)
-      // ..
-    });
-})
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
+    const email = document.querySelector("#email").value;
+    const password = document.querySelector("#password").value;
+    const confirmPassword = document.querySelector("#confirmPassword").value;
+    const username = document.querySelector("#username").value;
+    const terms = document.querySelector("#term").checked;
+
+    // ❌ validation FIX
+    if (!terms) {
+      alert("Please accept Terms of Service");
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters");
+      return;
+    }
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+
+        alert("Account created successfully");
+
+        // optional: username store (simple display only)
+        console.log("Username:", username);
+
+        window.location.href = "test.html";
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  });
+});
