@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // optional: username store (simple display only)
         console.log("Username:", username);
 
-        window.location.href = "test.html";
+        window.location.href = "signup.html";
       })
       .catch((error) => {
         alert(error.message);
